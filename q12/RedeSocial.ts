@@ -1,8 +1,8 @@
-import { Postagem } from "./Postagem"
-import { Perfil } from "./Perfil"
-import { PostagemAvancada } from "./PostagemAvancada"
-import { RepositorioPostagens } from "./RepositorioPostagens"
-import { RepositorioPerfis } from "./RepositorioPerfis"
+import { Postagem } from "./models/Postagem"
+import { Perfil } from "./models/Perfil"
+import { PostagemAvancada } from "./models/PostagemAvancada"
+import { RepositorioPostagens } from "./repositories/RepositorioPostagens"
+import { RepositorioPerfis } from "./repositories/RepositorioPerfis"
 
 export class RedeSocial {
     private _repositorioPerfis = new RepositorioPerfis();
@@ -20,9 +20,9 @@ export class RedeSocial {
         }
     }
 
-    consultarPerfil(id?: string, nome?: string, email?: string): Perfil | null {
+    consultarPerfil(id?: string, nome?: string, email?: string): Perfil {
         
-        return this._repositorioPerfis.consultar(id, nome, email);
+        return this._repositorioPerfis.consultar(id, nome, email);        
     }
 
     criarPostagem(id: string, texto: string, data: string, perfil: Perfil, curtidas: number = 0, descrurtidas: number = 0,  hashtags?: string[], visuRestantes?: number): void {
@@ -65,69 +65,45 @@ export class RedeSocial {
         
     }
 
-    consultarPostagens(id?: string, texto?: string, hashtag?: string, perfil?: Perfil): Postagem[] | null{
-        let postagens: Postagem[]|null = this._repositorioPostagens.consultar(id, texto, hashtag, perfil);
-
-        if (postagens) {
-            // postagens = postagens.filter(postagem => { if (postagem instanceof PostagemAvancada) {
-            //     return postagem.visualizacoesRestantes > 0;
-            // }});
-      
-            this.decrementarVisualizacoes(postagens);
-            return postagens;
-        }
-
-        return null;
+    consultarPostagens(id?: string, texto?: string, hashtag?: string, perfil?: Perfil): Postagem[] {
+        let postagens: Postagem[] = this._repositorioPostagens.consultar(id, texto, hashtag, perfil);
+        
+        this.decrementarVisualizacoes(postagens);
+        return postagens;
     }
 
     curtir(idPostagem: string): void {
-        const postagem = this._repositorioPostagens.consultarId(idPostagem);
-        if (postagem) {
-            postagem.curtir();
-        }
+        let postagem = this._repositorioPostagens.consultarId(idPostagem);
+        
+        postagem.curtir();
     }
 
     descurtir(idPostagem: string): void {
-        const postagem = this._repositorioPostagens.consultarId(idPostagem);
-        if (postagem) {
-            postagem.descurtir();
-        }
+        let postagem = this._repositorioPostagens.consultarId(idPostagem);
+
+        postagem.descurtir();
     }
 
     decrementarVisualizacoes(postagens: Postagem[]): void {
 
         for (let postagem of postagens){
             if (postagem instanceof PostagemAvancada) {
-              postagem.decrementarVisualizacoes();
+                postagem.decrementarVisualizacoes();
             }
         }
     }
 
-    exibirPostagensPorPerfil(id: string): Postagem[] | null{
-        const perfil: Perfil|null = this._repositorioPerfis.consultar(id);
-        let postagens: Postagem[] | null = [];
-        
-        if ( !perfil ){
-            return null;
-        }
-      
-        postagens = this._repositorioPostagens.consultarPorPerfil(perfil);
+    exibirPostagensPorPerfil(id: string): Postagem[]{
+        const perfil: Perfil = this._repositorioPerfis.consultar(id);
+        let postagens: Postagem[] = this._repositorioPostagens.consultarPorPerfil(perfil);
 
-        if ( postagens ){
-            this.decrementarVisualizacoes(postagens);
+        this.decrementarVisualizacoes(postagens);
 
-            return postagens;
-        }
-        
-        return null;
+        return postagens;
     }
     
-    exibirPostagensPorHashtag(hashtag: string): PostagemAvancada[] | null {
-        let postagens: PostagemAvancada[]|null = this._repositorioPostagens.consultarPorHashtag(hashtag);
-
-        if ( !postagens ){
-            return null; // Retorna um array vazio se não houver postagens com a hashtag
-        }
+    exibirPostagensPorHashtag(hashtag: string): PostagemAvancada[] {
+        let postagens: PostagemAvancada[] = this._repositorioPostagens.consultarPorHashtag(hashtag);
 
         this.decrementarVisualizacoes(postagens); // decrementa as visualizações das postagens
         return postagens; // Retorna o array com as postagens que possuem a hashtag
@@ -138,28 +114,22 @@ export class RedeSocial {
     }
 
     obterPerfis(): Perfil[] {
-        return this._repositorioPerfis.perfis;
+        return this._repositorioPerfis.perfis();
     }  
 
-    obterPostagens(): Postagem[] | null{
+    obterPostagens(): Postagem[]{
         return this._repositorioPostagens.obterPostagens();
     }  
 
-    obterPostagensPopular(): Postagem[] | null {
-        let postagens: Postagem[]|null = this.obterPostagens();
+    obterPostagensPopular(): Postagem[] {
+        let postagens: Postagem[] = this.obterPostagens();
         let postagensPop: Postagem[] = [];
-
-        if ( !postagens ){
-            return null;
-        }
 
         for ( let post of postagens ){
             if ( post.ehPopular() ) {
                 postagensPop.push(post)
             }
         }
-
-        if ( !postagensPop ) return null;
 
         return postagensPop;
     }
