@@ -1,12 +1,17 @@
 import { Postagem } from "./models/Postagem"
 import { Perfil } from "./models/Perfil"
 import { PostagemAvancada } from "./models/PostagemAvancada"
-import { RepositorioPostagens } from "./repositories/RepositorioPostagens"
-import { RepositorioPerfis } from "./repositories/RepositorioPerfis"
+import { IRepositorioPerfis } from "./interfaces/IRepositorioPerfis";
+import { IRepositorioPostagens } from "./interfaces/IRepositorioPostagens";
 
 export class RedeSocial {
-    private _repositorioPerfis = new RepositorioPerfis();
-    private _repositorioPostagens = new RepositorioPostagens();
+    private _repositorioPerfis: IRepositorioPerfis;
+    private _repositorioPostagens: IRepositorioPostagens;
+
+    constructor(repositorioPerfis: IRepositorioPerfis, repositorioPostagens: IRepositorioPostagens) {
+        this._repositorioPerfis = repositorioPerfis;
+        this._repositorioPostagens = repositorioPostagens;
+    }
 
     criarPerfil(id: string, nome: string, email: string): void{
         let novoPerfil: Perfil = new Perfil(id, nome, email);
