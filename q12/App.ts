@@ -7,6 +7,8 @@ import { PostagemAvancada } from "./models/PostagemAvancada";
 
 
 class App {
+
+  // TODO: Adicionar argumentos ao construtor de rede social
   private _redeSocial: RedeSocial = new RedeSocial();
   
   
