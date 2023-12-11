@@ -4,8 +4,6 @@ diferentes. Pegue duas formas chame em uma delas o método comparar
 passando a outra como parâmetro e exiba o resultado. Repita para outras formas.
 */
 
-import test from "node:test";
-
 interface FiguraGeometrica {
     calcularArea(): number;
     calcularPerimetro(): number;
