@@ -54,7 +54,7 @@ export class RepositorioPerfisArray implements IRepositorioPerfis {
       throw new PerfisNaoEncontradosException(`Não foram encontrados perfis.`);
     }
 
-    return this._perfis
+    return this._perfis;
   }
 
 }
