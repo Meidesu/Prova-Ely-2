@@ -4,7 +4,7 @@ import { PostagemAvancada } from "../models/PostagemAvancada";
 import { IRepositorioPostagens } from "../interfaces/IRepositorioPostagens";
 import { PostagemInvalidaException, PostagemNaoEncontradaException } from "../exceptions/AppException";
 
-export class RepositorioPostagens implements IRepositorioPostagens{
+export class RepositorioPostagensArray implements IRepositorioPostagens{
   private _postagem: Postagem[] = [];
 
   public incluir(postagem: Postagem): void{

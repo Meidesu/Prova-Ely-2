@@ -2,7 +2,7 @@ import { Perfil } from "../models/Perfil";
 import { IRepositorioPerfis } from "../interfaces/IRepositorioPerfis";
 import { PerfilExistenteException, PerfilNaoEncontradoException, PerfisNaoEncontradosException } from "../exceptions/AppException";
 
-export class RepositorioPerfis implements IRepositorioPerfis {
+export class RepositorioPerfisArray implements IRepositorioPerfis {
   private _perfis: Perfil[] = [];
 
   public incluir(perfil: Perfil): void{

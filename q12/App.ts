@@ -4,14 +4,19 @@ import { RedeSocial } from "./RedeSocial";
 import { continuar, input, inputInt, limparConsole, print, selecao, inputEmail, gerarId, inputId, simOuNao, idValido, ehEmail, exibirTitulo } from "../utils/io_utils";
 import { escreverArquivo, lerArquivo } from "../utils/fs_utils";
 import { PostagemAvancada } from "./models/PostagemAvancada";
+import { IRepositorioPerfis } from "./interfaces/IRepositorioPerfis";
+import { IRepositorioPostagens } from "./interfaces/IRepositorioPostagens";
 
 
-class App {
+export class App {
 
   // TODO: Adicionar argumentos ao construtor de rede social
-  private _redeSocial: RedeSocial = new RedeSocial();
+  private _redeSocial: RedeSocial;
   
-  
+  constructor(repoPerfil: IRepositorioPerfis, repoPost: IRepositorioPostagens) {
+    this._redeSocial = new RedeSocial(repoPerfil, repoPost);
+  }
+
   public rodarAplicacao(): void {
     this.carregarPerfis();
     this.carregarPostagens();
@@ -430,7 +435,3 @@ class App {
   }
 
 } // final da classe 
-
-
-let app: App = new App();
-app.rodarAplicacao();

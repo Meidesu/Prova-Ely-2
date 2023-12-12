@@ -4,12 +4,10 @@ exports.RedeSocial = void 0;
 var Postagem_1 = require("./models/Postagem");
 var Perfil_1 = require("./models/Perfil");
 var PostagemAvancada_1 = require("./models/PostagemAvancada");
-var RepositorioPostagens_1 = require("./repositories/RepositorioPostagens");
-var RepositorioPerfis_1 = require("./repositories/RepositorioPerfis");
 var RedeSocial = /** @class */ (function () {
-    function RedeSocial() {
-        this._repositorioPerfis = new RepositorioPerfis_1.RepositorioPerfis();
-        this._repositorioPostagens = new RepositorioPostagens_1.RepositorioPostagens();
+    function RedeSocial(repositorioPerfis, repositorioPostagens) {
+        this._repositorioPerfis = repositorioPerfis;
+        this._repositorioPostagens = repositorioPostagens;
     }
     RedeSocial.prototype.criarPerfil = function (id, nome, email) {
         var novoPerfil = new Perfil_1.Perfil(id, nome, email);

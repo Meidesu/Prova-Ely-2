@@ -1,12 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.App = void 0;
 var RedeSocial_1 = require("./RedeSocial");
 var io_utils_1 = require("../utils/io_utils");
 var fs_utils_1 = require("../utils/fs_utils");
 var PostagemAvancada_1 = require("./models/PostagemAvancada");
 var App = /** @class */ (function () {
-    function App() {
-        this._redeSocial = new RedeSocial_1.RedeSocial();
+    function App(repoPerfil, repoPost) {
+        this._redeSocial = new RedeSocial_1.RedeSocial(repoPerfil, repoPost);
     }
     App.prototype.rodarAplicacao = function () {
         this.carregarPerfis();
@@ -308,5 +309,4 @@ var App = /** @class */ (function () {
     };
     return App;
 }()); // final da classe 
-var app = new App();
-app.rodarAplicacao();
+exports.App = App;
