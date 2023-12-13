@@ -47,7 +47,8 @@ var App = /** @class */ (function () {
                 }
             }
             catch (e) {
-                (0, io_utils_1.print)(e.message);
+                (0, io_utils_1.print)(e);
+                console.log(e.stack);
             }
             (0, io_utils_1.continuar)();
             (0, io_utils_1.exibirTitulo)();
@@ -89,7 +90,7 @@ var App = /** @class */ (function () {
     App.prototype.incluirPostagem = function () {
         var perfil = this.selecionarPerfil();
         if (!perfil) {
-            (0, io_utils_1.print)('Nao e possivel criar uma postagem, pois nao ha perfis cadastrados');
+            (0, io_utils_1.print)('Nenhum perfil selecionado!');
             return;
         }
         var id = (0, io_utils_1.gerarId)();

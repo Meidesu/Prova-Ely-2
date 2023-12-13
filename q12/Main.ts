@@ -27,7 +27,7 @@ function main() {
   
       case 2:
         repoPerfil = new RepositorioPerfisArquivo();
-        repoPostagem = new RepositorioPostagemArquivo();
+        repoPostagem = new RepositorioPostagemArquivo(repoPerfil);
   
         break;
   

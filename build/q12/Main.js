@@ -19,7 +19,7 @@ function main() {
                 break;
             case 2:
                 repoPerfil = new RepositorioPerfisArquivo_1.RepositorioPerfisArquivo();
-                repoPostagem = new RepositorioPostagensArquivo_1.RepositorioPostagemArquivo();
+                repoPostagem = new RepositorioPostagensArquivo_1.RepositorioPostagemArquivo(repoPerfil);
                 break;
             case 0:
                 console.log('Saindo...');

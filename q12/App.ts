@@ -68,7 +68,9 @@ export class App {
         }
       } catch (e: any) {
   
-        print(e.message);
+        print(e);
+        console.log(e.stack);
+        
       }
 
       continuar()
@@ -130,7 +132,7 @@ export class App {
     let perfil = this.selecionarPerfil();
 
     if ( !perfil ){
-      print('Nao e possivel criar uma postagem, pois nao ha perfis cadastrados');
+      print('Nenhum perfil selecionado!');
       return;
     }
 
